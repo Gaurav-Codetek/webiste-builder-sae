@@ -1,0 +1,21 @@
+.text-element-wrapper {
+  display: inline-block;
+}
+
+.text-content {
+  display: block;
+  min-height: 20px;
+  word-wrap: break-word;
+}
+
+.text-editor {
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-size: inherit;
+  color: inherit;
+  font-family: inherit;
+  padding: inherit;
+  outline: none;
+  min-width: 100px;
+}

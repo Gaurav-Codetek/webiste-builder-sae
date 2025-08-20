@@ -1,0 +1,71 @@
+.element-library {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.library-section h4 {
+  margin: 0 0 15px 0;
+  font-size: 14px;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 5px;
+}
+
+.element-item,
+.section-template {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border: 2px solid #e1e1e1;
+  border-radius: 8px;
+  cursor: grab;
+  transition: all 0.3s ease;
+  background-color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.element-item:hover,
+.section-template:hover {
+  border-color: #3498db;
+  background-color: #f8f9ff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
+}
+
+.element-item.dragging,
+.section-template.dragging {
+  opacity: 0.5;
+  cursor: grabbing;
+}
+
+.element-icon {
+  margin-right: 12px;
+  font-size: 20px;
+  min-width: 24px;
+}
+
+.element-label {
+  font-weight: 500;
+  color: #333;
+  font-size: 14px;
+}
+
+.section-template {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-color: #667eea;
+}
+
+.section-template:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.section-template .element-label {
+  color: white;
+  font-weight: 600;
+}

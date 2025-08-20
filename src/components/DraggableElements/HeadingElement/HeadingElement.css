@@ -1,0 +1,19 @@
+.heading-element {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.heading-content {
+  margin: 0;
+  word-wrap: break-word;
+}
+
+.heading-editor {
+  width: 100%;
+  border: 2px solid #3498db;
+  background: white;
+  border-radius: 4px;
+  padding: 10px;
+  outline: none;
+  font-family: inherit;
+}

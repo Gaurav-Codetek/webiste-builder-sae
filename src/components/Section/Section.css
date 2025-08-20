@@ -1,0 +1,449 @@
+.section {
+  position: relative;
+  margin-bottom: 4px;
+  border: 2px solid transparent;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 120px;
+  animation: slideInUp 0.4s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.section:hover {
+  border-color: #3498db;
+  box-shadow: 0 4px 20px rgba(52, 152, 219, 0.15);
+}
+
+.section.selected {
+  border-color: #e74c3c;
+  box-shadow: 0 4px 20px rgba(231, 76, 60, 0.2);
+}
+
+.section-controls {
+  position: absolute;
+  top: -35px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #3498db, #2980b9);
+  color: white;
+  padding: 6px 15px;
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 10;
+  border-radius: 6px 6px 0 0;
+  box-shadow: 0 -2px 8px rgba(52, 152, 219, 0.2);
+}
+
+.section:hover .section-controls,
+.section.selected .section-controls {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section-label {
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.section-delete {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.section-delete:hover {
+  background: #c0392b;
+  transform: scale(1.1);
+}
+
+.section-content {
+  display: flex;
+  min-height: 100px;
+  width: 100%;
+  gap: 0;
+}
+
+.section-column {
+  padding: 25px;
+  border-right: 1px dashed #e0e0e0;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.section-column:last-child {
+  border-right: none;
+}
+
+.section-column.column-drag-over {
+  background-color: rgba(52, 152, 219, 0.05);
+  border-right-color: #3498db;
+}
+
+.section-column.column-drag-over::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px dashed #3498db;
+  border-radius: 8px;
+  margin: 10px;
+  animation: dashMove 2s linear infinite;
+}
+
+@keyframes dashMove {
+  to {
+    stroke-dashoffset: -20px;
+  }
+}
+
+.column-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  border: 2px dashed #ddd;
+  border-radius: 12px;
+  color: #999;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.column-placeholder:hover {
+  border-color: #3498db;
+  background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.1);
+}
+
+.placeholder-content {
+  text-align: center;
+  z-index: 2;
+}
+
+.placeholder-icon {
+  font-size: 24px;
+  display: block;
+  margin-bottom: 8px;
+  color: #3498db;
+}
+
+.column-placeholder p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.column-drop-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 20px;
+  right: 20px;
+  height: 3px;
+  z-index: 5;
+}
+
+.drop-indicator-line {
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #27ae60, #2ecc71);
+  border-radius: 2px;
+  animation: pulse 1s infinite;
+  box-shadow: 0 0 8px rgba(39, 174, 96, 0.6);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .section-content {
+    flex-direction: column;
+  }
+  
+  .section-column {
+    border-right: none;
+    border-bottom: 1px dashed #e0e0e0;
+    width: 100% !important;
+  }
+  
+  .section-column:last-child {
+    border-bottom: none;
+  }
+}
+
+/* Add to your existing Section.css */
+
+.section {
+  position: relative;
+  margin-bottom: 4px;
+  border: 2px solid transparent;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 120px;
+  animation: slideInUp 0.4s ease-out;
+  /* Prevent overflow issues */
+  overflow: visible;
+  width: 100%;
+  margin-bottom: 200px;
+}
+
+.section-content {
+  display: flex;
+  min-height: 100px;
+  width: 100%;
+  gap: 0;
+  /* Prevent content from overflowing */
+  overflow: hidden;
+}
+
+.section-column {
+  padding: 25px;
+  border-right: 1px dashed #e0e0e0;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: all 0.3s ease;
+  /* Prevent column overflow */
+  overflow: visible;
+  word-wrap: break-word;
+}
+
+/* Ensure sections don't cause horizontal scroll */
+.section-column:last-child {
+  border-right: none;
+}
+
+/* Mobile responsiveness improvements */
+@media (max-width: 768px) {
+  .section-content {
+    flex-direction: column;
+    overflow: visible;
+  }
+  
+  .section-column {
+    border-right: none;
+    border-bottom: 1px dashed #e0e0e0;
+    width: 100% !important;
+    padding: 15px;
+  }
+  
+  .section-column:last-child {
+    border-bottom: none;
+  }
+}
+
+
+/* Add these new styles to your existing Section.css */
+
+.draggable-element-container {
+  position: relative;
+  cursor: move;
+}
+
+.draggable-element-container:hover {
+  z-index: 10;
+}
+
+.element-drop-indicator {
+  position: relative;
+  height: 6px;
+  margin: 8px 0;
+  animation: slideInIndicator 0.3s ease-out;
+}
+
+.drop-indicator-line {
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #e74c3c, #c0392b);
+  border-radius: 2px;
+  animation: pulseIndicator 1.5s infinite;
+  box-shadow: 0 0 12px rgba(231, 76, 60, 0.6);
+}
+
+.drop-indicator-text {
+  position: absolute;
+  left: 50%;
+  top: -18px;
+  transform: translateX(-50%);
+  background: #e74c3c;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  animation: fadeInIndicator 0.3s ease-out;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+@keyframes slideInIndicator {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+    height: 0;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    height: 6px;
+  }
+}
+
+@keyframes pulseIndicator {
+  0%, 100% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scaleY(1.3);
+  }
+}
+
+@keyframes fadeInIndicator {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Enhanced column drag over state */
+.section-column.column-drag-over {
+  background-color: rgba(231, 76, 60, 0.05);
+  border-right-color: #e74c3c;
+  border-left: 3px solid #e74c3c;
+  border-radius: 8px;
+  margin: 0 5px;
+}
+
+.section-column.column-drag-over::before {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  border: 2px dashed #e74c3c;
+  border-radius: 8px;
+  animation: dashMoveReorder 2s linear infinite;
+  z-index: 1;
+}
+
+@keyframes dashMoveReorder {
+  to {
+    stroke-dashoffset: -30px;
+  }
+}
+
+/* Element reordering feedback */
+.element-wrapper.dragging {
+  opacity: 0.5;
+  transform: rotate(2deg);
+  z-index: 1000;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+.element-wrapper {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.element-wrapper:hover {
+  transform: translateY(-2px);
+}
+
+/* Reorder controls */
+.element-reorder-controls {
+  position: absolute;
+  left: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+}
+
+.element-wrapper:hover .element-reorder-controls {
+  opacity: 1;
+}
+
+.reorder-btn {
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 4px;
+  background: #3498db;
+  color: white;
+  cursor: pointer;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.reorder-btn:hover {
+  background: #2980b9;
+  transform: scale(1.1);
+}
+
+.reorder-btn:disabled {
+  background: #bdc3c7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .element-reorder-controls {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+    flex-direction: row;
+    justify-content: center;
+    margin: 10px 0;
+    opacity: 1;
+  }
+  
+  .drop-indicator-text {
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+}
+
+

@@ -1,0 +1,28 @@
+.paragraph-element {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.paragraph-content {
+  margin: 0;
+  word-wrap: break-word;
+  line-height: 1.6;
+}
+
+.paragraph-editor {
+  width: 100%;
+  border: 2px solid #3498db;
+  background: white;
+  border-radius: 8px;
+  padding: 15px;
+  outline: none;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: 1.6;
+  resize: vertical;
+  min-height: 120px;
+}
+
+.paragraph-editor:focus {
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}

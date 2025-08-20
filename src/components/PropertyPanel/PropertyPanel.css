@@ -1,0 +1,407 @@
+.property-panel {
+  width: 320px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-size: 100% 60px;
+  background-repeat: no-repeat;
+  background-color: #ffffff;
+  border-left: 1px solid #e8ecf4;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  box-shadow: -2px 0 10px rgba(0,0,0,0.05);
+}
+
+.property-panel-header {
+  padding: 25px 20px;
+  background: transparent;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: none;
+}
+
+.property-panel-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+}
+
+.element-type {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  backdrop-filter: blur(10px);
+}
+
+.no-selection {
+  padding: 40px 25px;
+  color: #64748b;
+  background: white;
+  margin: 0;
+  flex: 1;
+}
+
+.help-content h4 {
+  color: #334155;
+  font-size: 16px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.help-content ul {
+  list-style: none;
+  padding: 0;
+}
+
+.help-content li {
+  padding: 12px 0;
+  border-bottom: 1px solid #f1f5f9;
+  position: relative;
+  padding-left: 20px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.help-content li:before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: #667eea;
+  font-weight: bold;
+}
+
+.property-section {
+  padding: 25px 20px;
+  border-bottom: 1px solid #f1f5f9;
+  background: white;
+}
+
+.property-section:last-child {
+  border-bottom: none;
+}
+
+.property-section h4 {
+  margin: 0 0 20px 0;
+  font-size: 14px;
+  color: #334155;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  position: relative;
+}
+
+.property-section h4:after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 30px;
+  height: 2px;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  border-radius: 1px;
+}
+
+.property-field {
+  margin-bottom: 20px;
+}
+
+.property-field:last-child {
+  margin-bottom: 0;
+}
+
+.property-field label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: #475569;
+  font-weight: 500;
+}
+
+.property-field input,
+.property-field select,
+.property-field textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  background: #fafbfc;
+  font-family: inherit;
+}
+
+.property-field input:focus,
+.property-field select:focus,
+.property-field textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.property-field textarea {
+  resize: vertical;
+  min-height: 80px;
+  font-family: inherit;
+  line-height: 1.5;
+}
+
+.property-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.property-field input[type="color"] {
+  height: 45px;
+  padding: 4px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.property-field input[type="range"] {
+  background: #e2e8f0;
+  height: 6px;
+  border-radius: 3px;
+  outline: none;
+}
+
+/* Custom scrollbar */
+.property-panel::-webkit-scrollbar {
+  width: 6px;
+}
+
+.property-panel::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+.property-panel::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.property-panel::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Add these new styles to the existing PropertyPanel.css */
+
+.alignment-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.align-btn {
+  padding: 12px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  background: #fafbfc;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.align-btn:hover {
+  border-color: #667eea;
+  background: #f8f9ff;
+}
+
+.align-btn.active {
+  border-color: #667eea;
+  background: #667eea;
+  color: white;
+}
+
+.border-radius-controls,
+.opacity-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.border-radius-controls input[type="range"],
+.opacity-controls input[type="range"] {
+  flex: 1;
+  height: 6px;
+  background: #e2e8f0;
+  border: none;
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+}
+
+.border-radius-controls input[type="range"]::-webkit-slider-thumb,
+.opacity-controls input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #667eea;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3);
+}
+
+.border-radius-controls input[type="range"]::-moz-range-thumb,
+.opacity-controls input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #667eea;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3);
+}
+
+.border-radius-controls span,
+.opacity-controls span {
+  min-width: 45px;
+  text-align: center;
+  font-weight: 600;
+  color: #334155;
+  background: #f1f5f9;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.property-field input[type="url"] {
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  font-family: monospace;
+  font-size: 13px;
+}
+
+.property-field input[type="url"]:focus {
+  border-color: #667eea;
+  background: white;
+}
+
+.property-panel {
+  width: 320px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-size: 100% 60px;
+  background-repeat: no-repeat;
+  background-color: #ffffff;
+  border-left: 1px solid #e8ecf4;
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Full height */
+  overflow: hidden; /* Prevent overflow at panel level */
+  box-shadow: -2px 0 10px rgba(0,0,0,0.05);
+}
+
+.property-panel-header {
+  padding: 25px 20px;
+  background: transparent;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: none;
+  flex-shrink: 0; /* Prevent header from shrinking */
+}
+
+/* Make property sections scrollable */
+.property-panel > *:not(.property-panel-header) {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.no-selection {
+  padding: 40px 25px;
+  color: #64748b;
+  background: white;
+  margin: 0;
+  overflow-y: auto;
+}
+
+.property-section {
+  padding: 25px 20px;
+  border-bottom: 1px solid #f1f5f9;
+  background: white;
+}
+
+/* Custom scrollbar for property panel */
+.property-panel::-webkit-scrollbar {
+  width: 6px;
+}
+
+.property-panel::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+.property-panel::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.property-panel::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Rest of your existing PropertyPanel CSS styles remain the same... */
+
+/* Add these new styles to your existing PropertyPanel.css */
+
+.height-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.height-controls input[type="range"] {
+  flex: 1;
+  height: 6px;
+  background: #e2e8f0;
+  border: none;
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+}
+
+.height-controls input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #667eea;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3);
+}
+
+.height-controls input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #667eea;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3);
+}
+
+.height-controls span {
+  min-width: 45px;
+  text-align: center;
+  font-weight: 600;
+  color: #334155;
+  background: #f1f5f9;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+

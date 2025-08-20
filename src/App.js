@@ -1,24 +1,40 @@
-import logo from './logo.svg';
+import React from 'react';
+import { BuilderProvider } from './context/BuilderContext';
+import DragDropProvider from './components/DragDropProvider/DragDropProvider';
+import Toolbar from './components/Toolbar/Toolbar';
+import Sidebar from './components/Sidebar/Sidebar';
+import Canvas from './components/Canvas/Canvas';
+import PropertyPanel from './components/PropertyPanel/PropertyPanel';
+import PreviewMode from './components/PreviewMode/PreviewMode';
+import { useBuilder } from './context/BuilderContext';
 import './App.css';
+
+const AppContent = () => {
+  const { isPreviewMode } = useBuilder();
+
+  if (isPreviewMode) {
+    return <PreviewMode />;
+  }
+
+  return (
+    <div className="app">
+      <Toolbar />
+      <div className="app-content">
+        <Sidebar />
+        <Canvas />
+        <PropertyPanel />
+      </div>
+    </div>
+  );
+};
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BuilderProvider>
+      <DragDropProvider>
+        <AppContent />
+      </DragDropProvider>
+    </BuilderProvider>
   );
 }
 

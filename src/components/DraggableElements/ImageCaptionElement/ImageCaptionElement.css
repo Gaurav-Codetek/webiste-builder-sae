@@ -1,0 +1,123 @@
+.image-caption-element {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.image-caption-figure {
+  margin: 0;
+  text-align: center;
+}
+
+.caption-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.image-caption {
+  margin-top: 12px;
+  font-style: italic;
+  color: #666;
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.image-caption-editor {
+  background: white;
+  border: 2px solid #667eea;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+}
+
+.editor-field {
+  margin-bottom: 15px;
+}
+
+.editor-field label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+}
+
+.editor-field input,
+.editor-field textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.editor-field input:focus,
+.editor-field textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.editor-field textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.editor-controls {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.save-btn, .cancel-btn {
+  flex: 1;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.save-btn {
+  background: #27ae60;
+  color: white;
+}
+
+.save-btn:hover {
+  background: #229954;
+  transform: translateY(-2px);
+}
+
+.cancel-btn {
+  background: #95a5a6;
+  color: white;
+}
+
+.cancel-btn:hover {
+  background: #7f8c8d;
+  transform: translateY(-2px);
+}
+
+.image-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #f8f9fa;
+  border: 2px dashed #dee2e6;
+  border-radius: 8px;
+  min-height: 200px;
+  color: #6c757d;
+}
+
+.image-error span {
+  font-size: 48px;
+  margin-bottom: 10px;
+}

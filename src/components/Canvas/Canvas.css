@@ -1,0 +1,239 @@
+.canvas {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #f8f9fa;
+  height: 100%; /* Use full height of parent */
+  overflow: hidden; /* Prevent canvas-level overflow */
+}
+
+.canvas-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e1e1e1;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  z-index: 10;
+  flex-shrink: 0; /* Prevent header from shrinking */
+  min-height: 80px; /* Fixed header height */
+}
+
+.canvas-header h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #2c3e50;
+}
+
+.add-section-btn {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.add-section-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.canvas-content {
+  flex: 1;
+  background-color: #ffffff;
+  position: relative;
+  overflow-y: auto; /* Only vertical scrolling */
+  overflow-x: hidden; /* No horizontal scrolling */
+  scroll-behavior: smooth;
+  height: calc(100% - 80px); /* Account for header height */
+  /* Add padding to prevent content from touching edges */
+  padding-top: 0;
+}
+
+/* Custom scrollbar for canvas content */
+.canvas-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.canvas-content::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+.canvas-content::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 4px;
+}
+
+.canvas-content::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #5a67d8, #6b46c1);
+}
+
+.canvas-content.drag-over {
+  background-color: rgba(39, 174, 96, 0.02);
+}
+
+.drop-zone-indicator {
+  position: relative;
+  height: 4px;
+  margin: 10px 20px; /* Add horizontal margin */
+  animation: slideDown 0.3s ease-out;
+}
+
+.drop-zone-line {
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #27ae60, #2ecc71);
+  border-radius: 2px;
+  animation: pulse 1.5s infinite;
+  box-shadow: 0 0 10px rgba(39, 174, 96, 0.5);
+}
+
+.drop-zone-text {
+  position: absolute;
+  left: 50%;
+  top: -15px;
+  transform: translateX(-50%);
+  background: #27ae60;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scaleY(1.2);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.canvas-empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 400px; /* Reduced from 500px */
+  padding: 40px 20px;
+}
+
+.empty-state-content {
+  text-align: center;
+  max-width: 400px;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.empty-state-content h3 {
+  font-size: 24px;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.empty-state-content p {
+  color: #7f8c8d;
+  font-size: 16px;
+  margin-bottom: 30px;
+}
+
+.quick-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.quick-add-btn {
+  padding: 12px 24px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.quick-add-btn:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .canvas-header {
+    padding: 15px;
+    flex-direction: column;
+    gap: 10px;
+    min-height: auto;
+  }
+  
+  .canvas-header h3 {
+    font-size: 16px;
+  }
+  
+  .add-section-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+  
+  .canvas-content {
+    height: calc(100% - 100px); /* Account for mobile header */
+  }
+  
+  .drop-zone-indicator {
+    margin: 10px 10px;
+  }
+  
+  .empty-state-content {
+    padding: 20px;
+  }
+  
+  .quick-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+}

@@ -1,0 +1,138 @@
+.table-element-wrapper {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.table-editor {
+  background: white;
+  border: 2px solid #667eea;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+}
+
+.table-controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+.table-btn, .save-btn, .cancel-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.table-btn {
+  background: #3498db;
+  color: white;
+}
+
+.table-btn:hover {
+  background: #2980b9;
+}
+
+.save-btn {
+  background: #27ae60;
+  color: white;
+}
+
+.save-btn:hover {
+  background: #229954;
+}
+
+.cancel-btn {
+  background: #95a5a6;
+  color: white;
+}
+
+.cancel-btn:hover {
+  background: #7f8c8d;
+}
+
+.table-container {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.editable-table,
+.display-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.editable-table th,
+.editable-table td,
+.display-table th,
+.display-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+  position: relative;
+}
+
+.display-table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #2c3e50;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.display-table tr:hover {
+  background-color: #f8f9ff;
+}
+
+.table-input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 4px;
+  font-size: inherit;
+  font-family: inherit;
+}
+
+.table-input:focus {
+  outline: 2px solid #667eea;
+  outline-offset: -2px;
+  border-radius: 4px;
+}
+
+.header-input {
+  font-weight: 600;
+  background: #f8f9fa;
+}
+
+.remove-btn {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: #e74c3c;
+  color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.remove-btn:hover {
+  background: #c0392b;
+}
+
+.row-controls {
+  width: 40px;
+  text-align: center;
+  border-left: 2px solid #e2e8f0;
+  background: #f8f9fa;
+}
