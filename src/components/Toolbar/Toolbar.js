@@ -38,7 +38,7 @@ const Toolbar = () => {
     const jsonData = generateJSON(sections, canvasStyle);
 
     try {
-      // Find first content block with valid paragraph
+      // Find first content block with valid paragrap
       const firstValidBlock = jsonData.content.find(block =>
         block.paragraph && block.paragraph.trim() !== ''
       );
