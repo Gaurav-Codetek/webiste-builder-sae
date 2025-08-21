@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { useBuilder } from '../../context/BuilderContext';
+import BlogModal from '../BlogModal/BlogModal';
 import axios from 'axios'
 import './Toolbar.css';
 
 const Toolbar = () => {
   const { isPreviewMode, togglePreview, sections, canvasStyle } = useBuilder();
-  const [saveStatus, setSaveStatus] = useState('Save Page')
-  const [emailStatus, setEmailStatus] = useState("Send Bulk Email")
+  const [saveStatus, setSaveStatus] = useState('Save Page');
+  const [emailStatus, setEmailStatus] = useState("Send Bulk Email");
+  const [updateStatus, setUpdateStatus] = useState("Update");
+  const [isBlogModalOpen, setIsBlogModalOpen] = useState(false);
 
   const exportHTML = () => {
     const htmlContent = generateHTML(sections);
@@ -30,50 +33,53 @@ const Toolbar = () => {
   //   URL.revokeObjectURL(url);
   // };
 
-const sendEmail = async () => {
-  setEmailStatus("Sending...");
-  const jsonData = generateJSON(sections, canvasStyle);
-  
-  try {
-    // Find first content block with valid paragraph
-    const firstValidBlock = jsonData.content.find(block => 
-      block.paragraph && block.paragraph.trim() !== ''
-    );
+  const sendEmail = async () => {
+    setEmailStatus("Sending...");
+    const jsonData = generateJSON(sections, canvasStyle);
 
-    if (!firstValidBlock) {
-      alert('No paragraph content found to send in email');
-      setEmailStatus('No content to send');
-      return;
-    }
+    try {
+      // Find first content block with valid paragraph
+      const firstValidBlock = jsonData.content.find(block =>
+        block.paragraph && block.paragraph.trim() !== ''
+      );
 
-    // Find first subtitle or use title as fallback
-    const firstSubtitle = jsonData.content.find(block => 
-      block.subtitle && block.subtitle.trim() !== ''
-    )?.subtitle || jsonData.title;
-
-    const resp = await axios.post(
-      `${process.env.REACT_APP_BASE_URL}/sendEmail`,
-      {
-        title: jsonData.title,
-        link: `${process.env.REACT_APP_GEN_LINK}/?=${encodeURIComponent(jsonData.title)}`,
-        des: firstValidBlock.paragraph.trim(),
-        subs: 'subscriber',
-      },
-      {
-        headers: {
-          "X-API-KEY": process.env.REACT_APP_AUTH_KEY,
-        },
+      if (!firstValidBlock) {
+        alert('No paragraph content found to send in email');
+        setEmailStatus('No content to send');
+        return;
       }
-    );
-    
-    const data = resp.data.status;
-    alert(data);
-    setEmailStatus("Email sent!");
-  } catch (err) {
-    console.log(err);
-    setEmailStatus("Failed to send email");
-  }
-};
+
+      // Find first subtitle or use title as fallback
+      const firstSubtitle = jsonData.content.find(block =>
+        block.subtitle && block.subtitle.trim() !== ''
+      )?.subtitle || jsonData.title;
+
+      const resp = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/sendEmail`,
+        {
+          title: jsonData.title,
+          link: `${process.env.REACT_APP_GEN_LINK}/?=${encodeURIComponent(jsonData.title)}`,
+          des: firstValidBlock.paragraph.trim(),
+          subs: 'subscriber',
+        },
+        {
+          headers: {
+            "X-API-KEY": process.env.REACT_APP_AUTH_KEY,
+          },
+        }
+      );
+
+      const data = resp.data.status;
+      alert(data);
+      setEmailStatus("Email sent!");
+      setTimeout(()=>{
+        setEmailStatus("Send Bulk Email")
+      },3000)
+    } catch (err) {
+      console.log(err);
+      setEmailStatus("Try again!");
+    }
+  };
   const copyJSONToClipboard = async () => {
     const jsonData = generateJSON(sections, canvasStyle);
     try {
@@ -82,6 +88,36 @@ const sendEmail = async () => {
       alert('JSON copied to clipboard!');
     } catch (err) {
       console.error('Failed to copy JSON:', err);
+    }
+  };
+  const updateBlogData = async () => {
+    const jsonData = generateJSON(sections, canvasStyle);
+    setUpdateStatus('Updating...')
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/updateBlog`,
+        jsonData
+        ,
+        {
+          headers: {
+            'X-API-KEY': process.env.REACT_APP_AUTH_KEY,
+          },
+        }
+      );
+
+      if (response.data.status === 'Success') {
+        alert('Blog updated successfully!');
+        setUpdateStatus('Updated');
+        setTimeout(()=>{
+          setUpdateStatus('Update')
+        },3000)
+        return true;
+      }
+    } catch (error) {
+      console.error('Failed to update blog:', error);
+      alert('Failed to update blog');
+      setUpdateStatus('Update')
+      return false;
     }
   };
 
@@ -186,147 +222,147 @@ ${sectionsHTML}
 </html>`;
   };
 
-const generateJSON = (sections, canvasStyle) => {
-  // First, find the first heading element to use as title
-  let extractedTitle = "Generated Website"; // Default fallback
-  let foundTitle = false;
+  const generateJSON = (sections, canvasStyle) => {
+    // First, find the first heading element to use as title
+    let extractedTitle = "Generated Website"; // Default fallback
+    let foundTitle = false;
 
-  // Search for the first heading in all sections
-  for (const section of sections) {
-    if (foundTitle) break;
-    
-    for (let columnIndex = 0; columnIndex < section.columns; columnIndex++) {
-      const columnElements = section.elements
-        .filter(el => el.columnIndex === columnIndex)
-        .sort((a, b) => (a.order || 0) - (b.order || 0));
-
-      for (const element of columnElements) {
-        if (element.type === 'heading' && element.content && element.content.trim()) {
-          extractedTitle = element.content.trim();
-          foundTitle = true;
-          break;
-        }
-      }
+    // Search for the first heading in all sections
+    for (const section of sections) {
       if (foundTitle) break;
-    }
-  }
 
-  const websiteData = {
-    title: extractedTitle,
-    category: "Technology", 
-    date: new Date().toISOString(),
-    tag: "website-content",
-    content: []
-  };
-
-  // Process each section (skip the first heading if it was used as title)
-  let skipFirstHeading = foundTitle;
-
-  sections.forEach((section, sectionIndex) => {
-    // For each column in the section
-    for (let columnIndex = 0; columnIndex < section.columns; columnIndex++) {
-      const columnElements = section.elements
-        .filter(el => el.columnIndex === columnIndex)
-        .sort((a, b) => (a.order || 0) - (b.order || 0));
-
-      // Group elements into content blocks
-      let currentBlock = {};
-
-      columnElements.forEach((element, elementIndex) => {
-        // Skip the first heading if it was used as the title
-        if (skipFirstHeading && element.type === 'heading' && element.content.trim() === extractedTitle) {
-          skipFirstHeading = false;
-          return;
-        }
-
-        const contentData = getContentData(element);
-
-        if (contentData) {
-          // If we have a subtitle/heading OR text element, start a new block
-          if (element.type === 'heading' || element.type === 'text') {
-            // Push previous block if it exists
-            if (Object.keys(currentBlock).length > 0) {
-              websiteData.content.push(currentBlock);
-            }
-            // Start new block with subtitle
-            currentBlock = {
-              subtitle: contentData
-            };
-          }
-          // If it's a paragraph, add to current block
-          else if (element.type === 'paragraph') {
-            if (currentBlock.paragraph) {
-              // If there's already a paragraph, combine them
-              currentBlock.paragraph += " " + contentData;
-            } else {
-              currentBlock.paragraph = contentData;
-            }
-          }
-          // Handle images
-          else if (element.type === 'image' || element.type === 'image-caption') {
-            currentBlock.image = contentData;
-          }
-          // Handle videos
-          else if (element.type === 'video') {
-            currentBlock.video = contentData;
-          }
-          // Handle buttons as call-to-action
-          else if (element.type === 'button') {
-            currentBlock.cta = contentData;
-          }
-          // Handle tables as data
-          else if (element.type === 'table') {
-            currentBlock.table = contentData;
-          }
-          // Handle other elements
-          else {
-            // For standalone elements without subtitle, create individual blocks
-            const standaloneBlock = {};
-            standaloneBlock[element.type] = contentData;
-            websiteData.content.push(standaloneBlock);
-          }
-        }
-      });
-
-      // Push the last block if it exists
-      if (Object.keys(currentBlock).length > 0) {
-        websiteData.content.push(currentBlock);
-      }
-    }
-  });
-
-  // If no content blocks were created, create a simple structure
-  if (websiteData.content.length === 0) {
-    sections.forEach((section, sectionIndex) => {
       for (let columnIndex = 0; columnIndex < section.columns; columnIndex++) {
         const columnElements = section.elements
           .filter(el => el.columnIndex === columnIndex)
           .sort((a, b) => (a.order || 0) - (b.order || 0));
 
-        columnElements.forEach((element) => {
-          // Skip the title heading in simple structure too
+        for (const element of columnElements) {
+          if (element.type === 'heading' && element.content && element.content.trim()) {
+            extractedTitle = element.content.trim();
+            foundTitle = true;
+            break;
+          }
+        }
+        if (foundTitle) break;
+      }
+    }
+
+    const websiteData = {
+      title: extractedTitle,
+      category: "Technology",
+      date: new Date().toISOString(),
+      tag: "website-content",
+      content: []
+    };
+
+    // Process each section (skip the first heading if it was used as title)
+    let skipFirstHeading = foundTitle;
+
+    sections.forEach((section, sectionIndex) => {
+      // For each column in the section
+      for (let columnIndex = 0; columnIndex < section.columns; columnIndex++) {
+        const columnElements = section.elements
+          .filter(el => el.columnIndex === columnIndex)
+          .sort((a, b) => (a.order || 0) - (b.order || 0));
+
+        // Group elements into content blocks
+        let currentBlock = {};
+
+        columnElements.forEach((element, elementIndex) => {
+          // Skip the first heading if it was used as the title
           if (skipFirstHeading && element.type === 'heading' && element.content.trim() === extractedTitle) {
             skipFirstHeading = false;
             return;
           }
 
           const contentData = getContentData(element);
+
           if (contentData) {
-            const block = {};
-            if (element.type === 'text') {
-              block.subtitle = contentData;
-            } else {
-              block[element.type] = contentData;
+            // If we have a subtitle/heading OR text element, start a new block
+            if (element.type === 'heading' || element.type === 'text') {
+              // Push previous block if it exists
+              if (Object.keys(currentBlock).length > 0) {
+                websiteData.content.push(currentBlock);
+              }
+              // Start new block with subtitle
+              currentBlock = {
+                subtitle: contentData
+              };
             }
-            websiteData.content.push(block);
+            // If it's a paragraph, add to current block
+            else if (element.type === 'paragraph') {
+              if (currentBlock.paragraph) {
+                // If there's already a paragraph, combine them
+                currentBlock.paragraph += " " + contentData;
+              } else {
+                currentBlock.paragraph = contentData;
+              }
+            }
+            // Handle images
+            else if (element.type === 'image' || element.type === 'image-caption') {
+              currentBlock.image = contentData;
+            }
+            // Handle videos
+            else if (element.type === 'video') {
+              currentBlock.video = contentData;
+            }
+            // Handle buttons as call-to-action
+            else if (element.type === 'button') {
+              currentBlock.cta = contentData;
+            }
+            // Handle tables as data
+            else if (element.type === 'table') {
+              currentBlock.table = contentData;
+            }
+            // Handle other elements
+            else {
+              // For standalone elements without subtitle, create individual blocks
+              const standaloneBlock = {};
+              standaloneBlock[element.type] = contentData;
+              websiteData.content.push(standaloneBlock);
+            }
           }
         });
+
+        // Push the last block if it exists
+        if (Object.keys(currentBlock).length > 0) {
+          websiteData.content.push(currentBlock);
+        }
       }
     });
-  }
 
-  return websiteData;
-};
+    // If no content blocks were created, create a simple structure
+    if (websiteData.content.length === 0) {
+      sections.forEach((section, sectionIndex) => {
+        for (let columnIndex = 0; columnIndex < section.columns; columnIndex++) {
+          const columnElements = section.elements
+            .filter(el => el.columnIndex === columnIndex)
+            .sort((a, b) => (a.order || 0) - (b.order || 0));
+
+          columnElements.forEach((element) => {
+            // Skip the title heading in simple structure too
+            if (skipFirstHeading && element.type === 'heading' && element.content.trim() === extractedTitle) {
+              skipFirstHeading = false;
+              return;
+            }
+
+            const contentData = getContentData(element);
+            if (contentData) {
+              const block = {};
+              if (element.type === 'text') {
+                block.subtitle = contentData;
+              } else {
+                block[element.type] = contentData;
+              }
+              websiteData.content.push(block);
+            }
+          });
+        }
+      });
+    }
+
+    return websiteData;
+  };
 
 
 
@@ -410,10 +446,18 @@ const generateJSON = (sections, canvasStyle) => {
     return url;
   };
 
+  const openBlogModal = () => {
+    setIsBlogModalOpen(true);
+  };
+
+  const closeBlogModal = () => {
+    setIsBlogModalOpen(false);
+  };
+
   return (
     <div className="toolbar">
       <div className="toolbar-left">
-        <h1 className="toolbar-title">Website Builder</h1>
+        <h1 className="toolbar-title">For P&C <span style={{ fontSize: '15px' }}> with ❤️ by Alpha One</span></h1>
       </div>
       <div className="toolbar-center">
         <button
@@ -430,16 +474,23 @@ const generateJSON = (sections, canvasStyle) => {
         </button>
       </div>
       <div className="toolbar-right">
-        {/* <button className="toolbar-btn export-btn" onClick={copyJSONToClipboard}>
-          📄 Copy JSON
-        </button> */}
+        <button className="toolbar-btn blog-list-btn" onClick={openBlogModal}>
+          📚 Manage Blogs
+        </button>
         <button className="toolbar-btn json-export-btn" onClick={sendEmail}>
           📋 {emailStatus}
         </button>
         <button className="toolbar-btn copy-json-btn" onClick={handleSave}>
           📑 {saveStatus}
         </button>
+        <button className="toolbar-btn export-btn" onClick={updateBlogData}>
+          📄 {updateStatus}
+        </button>
       </div>
+      <BlogModal
+        isOpen={isBlogModalOpen}
+        onClose={closeBlogModal}
+      />
     </div>
   );
 };

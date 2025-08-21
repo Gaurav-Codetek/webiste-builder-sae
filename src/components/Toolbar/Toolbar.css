@@ -137,3 +137,30 @@
     padding: 8px 16px;
   }
 }
+
+.blog-list-btn {
+  background: linear-gradient(135deg, #8e44ad, #9b59b6);
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(142, 68, 173, 0.3);
+}
+
+.blog-list-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 25px rgba(142, 68, 173, 0.4);
+}
+
+.clear-btn {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+}
+
+.clear-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 25px rgba(231, 76, 60, 0.4);
+}
+
