@@ -30,7 +30,7 @@ const Toolbar = () => {
   //   a.href = url;
   //   a.download = 'website-data.json';
   //   a.click();
-  //   URL.revokeObjectURL(url);
+  //   URL.revokeObjectURL(url)
   // };
 
   const sendEmail = async () => {
